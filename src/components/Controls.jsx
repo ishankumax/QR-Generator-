@@ -3,14 +3,31 @@ import { useQRStore } from '../store/useQRStore';
 import { 
   Type, Link, Mail, Phone, Wifi, 
   Palette, Grid, Settings, 
-  Layout, Camera, Code, Briefcase, Calendar
+  Layout, Camera, Code, Briefcase, Calendar,
+  MessageSquare
 } from 'lucide-react';
+import { generateWiFiString } from '../utils/qrUtils';
 
 const Controls = () => {
-  const { type, value, wifiSsid, wifiPassword, wifiEncryption, setQRSettings, loadTemplate, ...settings } = useQRStore();
+  const { 
+    type, value, wifiSsid, wifiPassword, wifiEncryption, 
+    setQRSettings, loadTemplate, ...settings 
+  } = useQRStore();
 
   const handleValueChange = (e) => {
     setQRSettings({ value: e.target.value });
+  };
+
+  const handleWiFiChange = (field, val) => {
+    const newWifi = {
+      wifiSsid: field === 'ssid' ? val : wifiSsid,
+      wifiPassword: field === 'password' ? val : wifiPassword,
+      wifiEncryption: field === 'encryption' ? val : wifiEncryption,
+    };
+    setQRSettings({
+      ...newWifi,
+      value: generateWiFiString(newWifi.wifiSsid, newWifi.wifiPassword, newWifi.wifiEncryption)
+    });
   };
 
   const templates = [
@@ -24,41 +41,105 @@ const Controls = () => {
   const dotStyles = ['square', 'dots', 'rounded', 'extra-rounded', 'classy', 'classy-rounded'];
   const cornerStyles = ['square', 'dot', 'extra-rounded'];
 
-  return (
-    <div className="space-y-8">
-      {/* Content Section */}
-      <section>
-        <h3 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4 flex items-center gap-2">
-          <Type size={14} /> Content
-        </h3>
-        <div className="space-y-4">
-          <div className="flex bg-gray-100 p-1 rounded-2xl">
-            {['url', 'text', 'email', 'phone', 'wifi'].map((t) => (
-              <button
-                key={t}
-                onClick={() => setQRSettings({ type: t })}
-                className={`flex-1 py-2 px-3 rounded-xl text-xs font-semibold transition-all ${
-                  type === t ? 'bg-white shadow-sm text-gray-900' : 'text-gray-500 hover:text-gray-700'
-                }`}
-              >
-                {t.toUpperCase()}
-              </button>
-            ))}
+  const renderInputs = () => {
+    switch (type) {
+      case 'wifi':
+        return (
+          <div className="space-y-3">
+            <input
+              type="text"
+              value={wifiSsid}
+              onChange={(e) => handleWiFiChange('ssid', e.target.value)}
+              placeholder="Network Name (SSID)"
+              className="input-field"
+            />
+            <input
+              type="password"
+              value={wifiPassword}
+              onChange={(e) => handleWiFiChange('password', e.target.value)}
+              placeholder="Password"
+              className="input-field"
+            />
+            <select 
+              value={wifiEncryption}
+              onChange={(e) => handleWiFiChange('encryption', e.target.value)}
+              className="input-field appearance-none"
+            >
+              <option value="WPA">WPA/WPA2</option>
+              <option value="WEP">WEP</option>
+              <option value="nopass">No Encryption</option>
+            </select>
           </div>
-          
+        );
+      case 'email':
+        return (
+          <input
+            type="email"
+            value={value.startsWith('mailto:') ? value.replace('mailto:', '') : value}
+            onChange={(e) => setQRSettings({ value: `mailto:${e.target.value}` })}
+            placeholder="Email Address"
+            className="input-field"
+          />
+        );
+      case 'phone':
+        return (
+          <input
+            type="tel"
+            value={value.startsWith('tel:') ? value.replace('tel:', '') : value}
+            onChange={(e) => setQRSettings({ value: `tel:${e.target.value}` })}
+            placeholder="Phone Number"
+            className="input-field"
+          />
+        );
+      default:
+        return (
           <input
             type="text"
             value={value}
             onChange={handleValueChange}
             placeholder={`Enter ${type}...`}
-            className="w-full bg-gray-50 border border-gray-200 rounded-2xl px-5 py-4 focus:outline-none focus:ring-2 focus:ring-accent/20 focus:border-accent transition-all font-medium"
+            className="input-field"
           />
+        );
+    }
+  };
+
+  return (
+    <div className="space-y-8">
+      {/* Content Section */}
+      <section>
+        <h3 className="section-title">
+          <Type size={14} /> Content
+        </h3>
+        <div className="space-y-4">
+          <div className="flex bg-gray-100/50 p-1 rounded-2xl border border-gray-100">
+            {[
+              { id: 'url', icon: Link },
+              { id: 'text', icon: Type },
+              { id: 'email', icon: Mail },
+              { id: 'phone', icon: Phone },
+              { id: 'wifi', icon: Wifi }
+            ].map((t) => (
+              <button
+                key={t.id}
+                onClick={() => setQRSettings({ type: t.id })}
+                className={`flex-1 py-2 rounded-xl text-[10px] font-bold uppercase transition-all flex flex-col items-center gap-1 ${
+                  type === t.id ? 'bg-white shadow-sm text-accent' : 'text-gray-400 hover:text-gray-600'
+                }`}
+              >
+                <t.icon size={12} />
+                {t.id}
+              </button>
+            ))}
+          </div>
+          
+          {renderInputs()}
         </div>
       </section>
 
       {/* Templates Section */}
       <section>
-        <h3 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4 flex items-center gap-2">
+        <h3 className="section-title">
           <Layout size={14} /> Templates
         </h3>
         <div className="grid grid-cols-5 gap-3">
@@ -79,14 +160,14 @@ const Controls = () => {
 
       {/* Design Section */}
       <section>
-        <h3 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4 flex items-center gap-2">
+        <h3 className="section-title">
           <Palette size={14} /> Design
         </h3>
         <div className="space-y-6">
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <label className="text-xs font-semibold text-gray-500">Dots Color</label>
-              <div className="flex gap-2 p-2 bg-gray-50 rounded-xl border border-gray-100">
+              <label className="label-text">Dots Color</label>
+              <div className="color-picker-input">
                 <input 
                   type="color" 
                   value={settings.dotsColor} 
@@ -102,8 +183,8 @@ const Controls = () => {
               </div>
             </div>
             <div className="space-y-2">
-              <label className="text-xs font-semibold text-gray-500">BG Color</label>
-              <div className="flex gap-2 p-2 bg-gray-50 rounded-xl border border-gray-100">
+              <label className="label-text">BG Color</label>
+              <div className="color-picker-input">
                 <input 
                   type="color" 
                   value={settings.bgColor} 
@@ -121,17 +202,13 @@ const Controls = () => {
           </div>
 
           <div className="space-y-3">
-            <label className="text-xs font-semibold text-gray-500">Dot Style</label>
+            <label className="label-text">Dot Style</label>
             <div className="grid grid-cols-3 gap-2">
               {dotStyles.map((s) => (
                 <button
                   key={s}
                   onClick={() => setQRSettings({ dotsStyle: s })}
-                  className={`py-2 rounded-xl text-[10px] font-bold uppercase border transition-all ${
-                    settings.dotsStyle === s 
-                      ? 'bg-accent/5 border-accent/20 text-accent' 
-                      : 'bg-white border-gray-100 text-gray-400 hover:border-gray-200'
-                  }`}
+                  className={`style-btn ${settings.dotsStyle === s ? 'active' : ''}`}
                 >
                   {s.replace('-', ' ')}
                 </button>
@@ -140,17 +217,13 @@ const Controls = () => {
           </div>
 
           <div className="space-y-3">
-            <label className="text-xs font-semibold text-gray-500">Corner Style</label>
+            <label className="label-text">Corner Style</label>
             <div className="grid grid-cols-3 gap-2">
               {cornerStyles.map((s) => (
                 <button
                   key={s}
                   onClick={() => setQRSettings({ cornerSquareStyle: s })}
-                  className={`py-2 rounded-xl text-[10px] font-bold uppercase border transition-all ${
-                    settings.cornerSquareStyle === s 
-                      ? 'bg-accent/5 border-accent/20 text-accent' 
-                      : 'bg-white border-gray-100 text-gray-400 hover:border-gray-200'
-                  }`}
+                  className={`style-btn ${settings.cornerSquareStyle === s ? 'active' : ''}`}
                 >
                   {s.replace('-', ' ')}
                 </button>
@@ -162,13 +235,13 @@ const Controls = () => {
 
       {/* Advanced Section */}
       <section>
-        <h3 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4 flex items-center gap-2">
+        <h3 className="section-title">
           <Settings size={14} /> Options
         </h3>
         <div className="space-y-6">
           <div className="space-y-4">
             <div className="flex justify-between items-center">
-              <label className="text-xs font-semibold text-gray-500">Margin</label>
+              <label className="label-text">Margin</label>
               <span className="text-xs font-bold text-gray-900">{settings.margin}px</span>
             </div>
             <input 
@@ -180,14 +253,14 @@ const Controls = () => {
           </div>
 
           <div className="space-y-3">
-            <label className="text-xs font-semibold text-gray-500">Error Correction</label>
-            <div className="flex bg-gray-100 p-1 rounded-2xl">
+            <label className="label-text">Error Correction</label>
+            <div className="flex bg-gray-100/50 p-1 rounded-2xl border border-gray-100">
               {['L', 'M', 'Q', 'H'].map((lvl) => (
                 <button
                   key={lvl}
                   onClick={() => setQRSettings({ errorCorrection: lvl })}
                   className={`flex-1 py-2 rounded-xl text-xs font-bold transition-all ${
-                    settings.errorCorrection === lvl ? 'bg-white shadow-sm text-gray-900' : 'text-gray-400 hover:text-gray-600'
+                    settings.errorCorrection === lvl ? 'bg-white shadow-sm text-accent' : 'text-gray-400 hover:text-gray-600'
                   }`}
                 >
                   {lvl}
@@ -202,3 +275,4 @@ const Controls = () => {
 };
 
 export default Controls;
+
