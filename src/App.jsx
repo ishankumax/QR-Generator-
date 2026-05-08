@@ -22,48 +22,15 @@ function App() {
 
       <Navbar />
 
-      <main className="relative pt-40 pb-32 px-6 max-w-[1400px] mx-auto">
-        {/* Hero Section */}
-        <div className="mb-24 ibm-border pl-8 max-w-4xl">
-          <motion.div 
-            initial={{ opacity: 0, x: -10 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="flex items-center gap-2 text-blue-400 text-xs font-bold uppercase tracking-[0.3em] mb-6"
-          >
-            <Cpu size={14} />
-            <span>AI-Driven QR Generation</span>
-          </motion.div>
-          
-          <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-7xl md:text-8xl font-bold tracking-tight text-white mb-8 leading-[0.95]"
-          >
-            Antigravity <br /> 
-            <span className="text-blue-500">Agentic AI</span> <br />
-            Professional QR
-          </motion.h1>
-          
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="text-xl text-gray-400 max-w-2xl font-medium leading-relaxed"
-          >
-            Amplify your brand growth with RAG-optimized QR experiences. 
-            Precision design meets enterprise-grade AI architecture.
-          </motion.p>
-        </div>
-
+      <main className="relative pt-32 pb-32 px-6 max-w-[1400px] mx-auto">
         {/* Main Interface */}
-        <div className="grid lg:grid-cols-12 gap-8 items-start">
+        <div className="grid lg:grid-cols-12 gap-12 items-start">
           {/* Left: Controls */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="lg:col-span-5 bg-[#0a0f1d] border border-white/10 p-10"
+            className="lg:col-span-4 bg-[#0a0f1d] border border-white/10 p-10"
           >
             <Controls />
           </motion.div>
@@ -73,7 +40,7 @@ function App() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
-            className="lg:col-span-7 space-y-8 lg:sticky lg:top-32"
+            className="lg:col-span-8 space-y-8 lg:sticky lg:top-32"
           >
             <div className="bg-black/20 p-12 border border-white/5 backdrop-blur-sm">
               <QRPreview settings={settings} />

@@ -161,49 +161,52 @@ const Controls = () => {
       {/* Design Section */}
       <section>
         <h3 className="section-title">
-          <Palette size={14} /> Visual Parameters
+          <Palette size={14} /> Structural Design
         </h3>
-        <div className="space-y-8">
+        <div className="space-y-10">
           <div className="grid grid-cols-2 gap-6">
             <div className="space-y-3">
-              <label className="label-text">Pattern Hex</label>
+              <label className="label-text">Pattern Primary</label>
               <div className="color-picker-input">
                 <input 
                   type="color" 
                   value={settings.dotsColor} 
                   onChange={(e) => setQRSettings({ dotsColor: e.target.value })}
-                  className="w-8 h-8 overflow-hidden border-none cursor-pointer bg-transparent"
+                  className="w-8 h-8 border-none cursor-pointer bg-transparent"
                 />
                 <input 
                   type="text" 
                   value={settings.dotsColor} 
                   onChange={(e) => setQRSettings({ dotsColor: e.target.value })}
-                  className="bg-transparent text-xs font-mono w-full focus:outline-none text-white uppercase"
+                  className="bg-transparent text-[10px] font-mono w-full focus:outline-none text-white uppercase tracking-tighter"
                 />
               </div>
             </div>
             <div className="space-y-3">
-              <label className="label-text">Background Hex</label>
+              <label className="label-text">Background</label>
               <div className="color-picker-input">
                 <input 
                   type="color" 
                   value={settings.bgColor} 
                   onChange={(e) => setQRSettings({ bgColor: e.target.value })}
-                  className="w-8 h-8 overflow-hidden border-none cursor-pointer bg-transparent"
+                  className="w-8 h-8 border-none cursor-pointer bg-transparent"
                 />
                 <input 
                   type="text" 
                   value={settings.bgColor} 
                   onChange={(e) => setQRSettings({ bgColor: e.target.value })}
-                  className="bg-transparent text-xs font-mono w-full focus:outline-none text-white uppercase"
+                  className="bg-transparent text-[10px] font-mono w-full focus:outline-none text-white uppercase tracking-tighter"
                 />
               </div>
             </div>
           </div>
 
-          <div className="space-y-4">
-            <label className="label-text">Module Geometry</label>
-            <div className="grid grid-cols-3 gap-3">
+          <div className="space-y-5">
+            <label className="label-text flex justify-between">
+              <span>Module Geometry</span>
+              <span className="text-blue-500/50">Active: {settings.dotsStyle}</span>
+            </label>
+            <div className="grid grid-cols-3 gap-2">
               {dotStyles.map((s) => (
                 <button
                   key={s}
@@ -216,9 +219,12 @@ const Controls = () => {
             </div>
           </div>
 
-          <div className="space-y-4">
-            <label className="label-text">Corner Geometry</label>
-            <div className="grid grid-cols-3 gap-3">
+          <div className="space-y-5">
+            <label className="label-text flex justify-between">
+              <span>Corner Geometry</span>
+              <span className="text-blue-500/50">Active: {settings.cornerSquareStyle}</span>
+            </label>
+            <div className="grid grid-cols-3 gap-2">
               {cornerStyles.map((s) => (
                 <button
                   key={s}
@@ -238,29 +244,31 @@ const Controls = () => {
         <h3 className="section-title">
           <Settings size={14} /> Optimization
         </h3>
-        <div className="space-y-8">
-          <div className="space-y-4">
+        <div className="space-y-10">
+          <div className="space-y-5">
             <div className="flex justify-between items-center">
-              <label className="label-text text-blue-400">Quiet Zone</label>
-              <span className="text-xs font-mono text-white">{settings.margin}px</span>
+              <label className="label-text">Quiet Zone (Margin)</label>
+              <span className="text-[10px] font-mono text-white bg-blue-600 px-2 py-0.5">{settings.margin}px</span>
             </div>
-            <input 
-              type="range" min="0" max="100" 
-              value={settings.margin}
-              onChange={(e) => setQRSettings({ margin: parseInt(e.target.value) })}
-              className="w-full h-1 bg-white/10 appearance-none cursor-pointer accent-blue-600"
-            />
+            <div className="relative flex items-center">
+              <input 
+                type="range" min="0" max="100" 
+                value={settings.margin}
+                onChange={(e) => setQRSettings({ margin: parseInt(e.target.value) })}
+                className="w-full h-[2px] bg-white/10 appearance-none cursor-pointer accent-blue-600"
+              />
+            </div>
           </div>
 
-          <div className="space-y-4">
-            <label className="label-text">ECC Level</label>
+          <div className="space-y-5">
+            <label className="label-text">ECC Redundancy Level</label>
             <div className="flex bg-white/5 p-1 border border-white/5">
               {['L', 'M', 'Q', 'H'].map((lvl) => (
                 <button
                   key={lvl}
                   onClick={() => setQRSettings({ errorCorrection: lvl })}
-                  className={`flex-1 py-3 text-xs font-bold transition-all ${
-                    settings.errorCorrection === lvl ? 'bg-blue-600 text-white' : 'text-gray-500 hover:text-gray-300'
+                  className={`flex-1 py-4 text-[10px] font-bold transition-all ${
+                    settings.errorCorrection === lvl ? 'bg-blue-600 text-white shadow-lg' : 'text-gray-500 hover:text-gray-300'
                   }`}
                 >
                   {lvl}
