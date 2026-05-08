@@ -12,22 +12,16 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 px-6 ${
-      scrolled ? 'py-4' : 'py-8'
-    }`}>
-      <div className={`max-w-7xl mx-auto transition-all duration-500 ${
-        scrolled ? 'bg-black/60 backdrop-blur-xl border border-white/10 px-8 py-3 shadow-2xl' : 'px-0'
-      } flex items-center justify-between`}>
+    <nav className="fixed top-0 left-0 right-0 z-50 h-[72px] flex items-center px-8 bg-black/40 backdrop-blur-xl border-b border-white/5">
+      <div className="max-w-7xl mx-auto w-full flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <div className="w-10 h-10 bg-blue-600 flex items-center justify-center relative overflow-hidden group">
-            <div className="absolute inset-0 flex flex-col justify-between p-1 opacity-20 group-hover:opacity-40 transition-opacity">
-              {[1,2,3,4].map(i => <div key={i} className="w-full h-[1px] bg-white" />)}
-            </div>
-            <div className="w-4 h-4 bg-white z-10" />
+          <div className="w-10 h-10 bg-blue-600 flex items-center justify-center relative overflow-hidden group flex-shrink-0">
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-blue-800" />
+            <span className="relative z-10 text-white font-black text-sm tracking-tighter leading-none">AG</span>
           </div>
           <div className="flex flex-col">
             <span className="text-xl font-bold tracking-tighter text-white uppercase leading-none">Antigravity</span>
-            <span className="text-[10px] font-bold text-blue-500 uppercase tracking-[0.2em]">x IBM AI</span>
+            <span className="text-[10px] font-bold text-blue-400 uppercase tracking-[0.2em]">x IBM AI</span>
           </div>
         </div>
 
