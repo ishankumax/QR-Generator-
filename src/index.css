@@ -50,6 +50,24 @@
   .style-btn.active {
     @apply bg-blue-600/10 border-blue-500 text-white shadow-[0_0_15px_rgba(0,98,255,0.15)];
   }
+
+  /* Professional Scrollbar */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-white/10 hover:bg-white/20 transition-colors;
+  }
+
+  /* Scroll Mask Fade */
+  .scroll-mask {
+    mask-image: linear-gradient(to bottom, transparent, black 40px, black calc(100% - 40px), transparent);
+  }
 }
 
 .bg-grid {
