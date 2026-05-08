@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Github, Globe, Menu, X } from 'lucide-react';
+import { Globe, Menu, X } from 'lucide-react';
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -39,11 +39,10 @@ const Navbar = () => {
 
         <div className="flex items-center gap-4">
           <a 
-            href="https://github.com" 
-            target="_blank" 
+            href="#" 
             className="p-2 text-gray-400 hover:text-gray-900 transition-colors"
           >
-            <Github size={20} />
+            <Globe size={20} />
           </a>
           <button className="btn-primary py-2 text-sm">
             Get Started
@@ -55,3 +54,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
