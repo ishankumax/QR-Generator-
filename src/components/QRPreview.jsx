@@ -2,22 +2,22 @@ import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import QRCodeStyling from 'qr-code-styling';
 import { useQRStore } from '../store/useQRStore';
-import { Download, Share2, Eye } from 'lucide-react';
+import { Download, Share2, Globe, FileCode } from 'lucide-react';
 
 const QRPreview = ({ settings }) => {
   const ref = useRef(null);
   const addToHistory = useQRStore((state) => state.addToHistory);
   
   const qrCode = useRef(new QRCodeStyling({
-    width: 300,
-    height: 300,
+    width: 320,
+    height: 320,
     data: settings.value,
     dotsOptions: {
       color: settings.dotsColor,
       type: settings.dotsStyle,
     },
     backgroundOptions: {
-      color: settings.bgColor,
+      color: 'transparent',
     },
     cornersSquareOptions: {
       type: settings.cornerSquareStyle,
@@ -47,7 +47,7 @@ const QRPreview = ({ settings }) => {
         type: settings.dotsStyle
       },
       backgroundOptions: {
-        color: settings.bgColor,
+        color: 'transparent',
       },
       cornersSquareOptions: {
         type: settings.cornerSquareStyle,
@@ -65,7 +65,6 @@ const QRPreview = ({ settings }) => {
   }, [settings]);
 
   const onDownload = (ext) => {
-    addToHistory();
     qrCode.current.download({
       name: `antigravity-qr-${Date.now()}`,
       extension: ext
@@ -73,23 +72,21 @@ const QRPreview = ({ settings }) => {
   };
 
   return (
-    <div className="flex flex-col items-center gap-10">
+    <div className="flex flex-col items-center">
       <motion.div 
         layoutId="qr-box"
-        className="relative group"
+        className="bg-white p-12 shadow-2xl relative mb-12"
       >
-        <div className="absolute -inset-4 bg-accent/20 blur-2xl rounded-[40px] opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-        <div className="relative p-10 bg-white rounded-[40px] shadow-2xl shadow-accent/5 border border-gray-100 flex items-center justify-center overflow-hidden w-full max-w-[420px] aspect-square transition-transform duration-500 group-hover:scale-[1.02]">
-          <div ref={ref} className="qr-container scale-110" />
-          
-          <div className="absolute inset-0 bg-gray-900/0 group-hover:bg-gray-900/5 transition-colors duration-500 pointer-events-none" />
-        </div>
+        <div ref={ref} className="relative z-10" />
+        <div className="absolute top-0 left-0 w-full h-full border border-black/10 pointer-events-none" />
+        <div className="absolute top-[-2px] left-[-2px] w-4 h-4 border-t-2 border-l-2 border-blue-600" />
+        <div className="absolute bottom-[-2px] right-[-2px] w-4 h-4 border-b-2 border-r-2 border-blue-600" />
       </motion.div>
-      
-      <div className="flex gap-4 w-full max-w-[420px]">
+
+      <div className="flex flex-col w-full max-w-[320px] gap-4">
         <button 
           onClick={() => onDownload('png')}
-          className="flex-[2] bg-gray-900 text-white py-4 rounded-3xl font-bold hover:bg-gray-800 transition-all active:scale-95 flex items-center justify-center gap-2 shadow-xl shadow-gray-900/20"
+          className="w-full bg-[#0062ff] hover:bg-[#0052d4] text-white py-4 font-bold uppercase tracking-widest flex items-center justify-center gap-3 transition-all active:scale-[0.98]"
         >
           <Download size={18} />
           Download PNG

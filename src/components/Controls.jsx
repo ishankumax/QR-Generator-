@@ -4,7 +4,7 @@ import {
   Type, Link, Mail, Phone, Wifi, 
   Palette, Grid, Settings, 
   Layout, Camera, Code, Briefcase, Calendar,
-  MessageSquare
+  MessageSquare, Globe
 } from 'lucide-react';
 import { generateWiFiString } from '../utils/qrUtils';
 
@@ -31,11 +31,11 @@ const Controls = () => {
   };
 
   const templates = [
-    { name: 'Portfolio', icon: Briefcase, data: { value: 'https://portfolio.me', dotsColor: '#10b981', cornerSquareColor: '#10b981', dotsStyle: 'classy' } },
-    { name: 'Instagram', icon: Camera, data: { value: 'https://instagram.com/user', dotsColor: '#ec4899', cornerSquareColor: '#ec4899', dotsStyle: 'dots' } },
-    { name: 'GitHub', icon: Code, data: { value: 'https://github.com/user', dotsColor: '#1f2937', cornerSquareColor: '#1f2937', dotsStyle: 'square' } },
-    { name: 'WiFi', icon: Wifi, data: { type: 'wifi', dotsColor: '#6366f1', cornerSquareColor: '#6366f1', dotsStyle: 'extra-rounded' } },
-    { name: 'Event', icon: Calendar, data: { value: 'https://event.com', dotsColor: '#f59e0b', cornerSquareColor: '#f59e0b', dotsStyle: 'rounded' } },
+    { name: 'IBM AI', icon: Globe, data: { value: 'https://ibm.com/ai', dotsColor: '#0062ff', cornerSquareColor: '#0062ff', dotsStyle: 'square' } },
+    { name: 'Cloud', icon: Briefcase, data: { value: 'https://cloud.ibm.com', dotsColor: '#ffffff', cornerSquareColor: '#ffffff', dotsStyle: 'classy' } },
+    { name: 'GitHub', icon: Code, data: { value: 'https://github.com/ibm', dotsColor: '#3b82f6', cornerSquareColor: '#3b82f6', dotsStyle: 'square' } },
+    { name: 'WiFi', icon: Wifi, data: { type: 'wifi', dotsColor: '#0062ff', cornerSquareColor: '#0062ff', dotsStyle: 'extra-rounded' } },
+    { name: 'Docs', icon: Calendar, data: { value: 'https://docs.ibm.com', dotsColor: '#60a5fa', cornerSquareColor: '#60a5fa', dotsStyle: 'rounded' } },
   ];
 
   const dotStyles = ['square', 'dots', 'rounded', 'extra-rounded', 'classy', 'classy-rounded'];
@@ -105,14 +105,14 @@ const Controls = () => {
   };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-10">
       {/* Content Section */}
       <section>
         <h3 className="section-title">
-          <Type size={14} /> Content
+          <Type size={14} /> System Input
         </h3>
         <div className="space-y-4">
-          <div className="flex bg-gray-100/50 p-1 rounded-2xl border border-gray-100">
+          <div className="flex bg-white/5 p-1 border border-white/5">
             {[
               { id: 'url', icon: Link },
               { id: 'text', icon: Type },
@@ -123,8 +123,8 @@ const Controls = () => {
               <button
                 key={t.id}
                 onClick={() => setQRSettings({ type: t.id })}
-                className={`flex-1 py-2 rounded-xl text-[10px] font-bold uppercase transition-all flex flex-col items-center gap-1 ${
-                  type === t.id ? 'bg-white shadow-sm text-accent' : 'text-gray-400 hover:text-gray-600'
+                className={`flex-1 py-3 text-[10px] font-bold uppercase transition-all flex flex-col items-center gap-1 ${
+                  type === t.id ? 'bg-blue-600 text-white' : 'text-gray-500 hover:text-gray-300 hover:bg-white/5'
                 }`}
               >
                 <t.icon size={12} />
@@ -140,19 +140,19 @@ const Controls = () => {
       {/* Templates Section */}
       <section>
         <h3 className="section-title">
-          <Layout size={14} /> Templates
+          <Layout size={14} /> Presets
         </h3>
-        <div className="grid grid-cols-5 gap-3">
+        <div className="grid grid-cols-5 gap-4">
           {templates.map((tmpl) => (
             <button
               key={tmpl.name}
               onClick={() => loadTemplate(tmpl.data)}
-              className="flex flex-col items-center gap-2 group"
+              className="flex flex-col items-center gap-3 group"
             >
-              <div className="w-12 h-12 rounded-2xl bg-gray-50 border border-gray-100 flex items-center justify-center group-hover:bg-accent/5 group-hover:border-accent/20 transition-all">
-                <tmpl.icon size={20} className="text-gray-400 group-hover:text-accent transition-colors" />
+              <div className="w-full aspect-square bg-white/5 border border-white/5 flex items-center justify-center group-hover:border-blue-500/50 transition-all">
+                <tmpl.icon size={20} className="text-gray-500 group-hover:text-blue-400 transition-colors" />
               </div>
-              <span className="text-[10px] font-bold text-gray-400 uppercase">{tmpl.name}</span>
+              <span className="text-[9px] font-bold text-gray-500 uppercase tracking-widest">{tmpl.name}</span>
             </button>
           ))}
         </div>
@@ -161,49 +161,49 @@ const Controls = () => {
       {/* Design Section */}
       <section>
         <h3 className="section-title">
-          <Palette size={14} /> Design
+          <Palette size={14} /> Visual Parameters
         </h3>
-        <div className="space-y-6">
-          <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <label className="label-text">Dots Color</label>
+        <div className="space-y-8">
+          <div className="grid grid-cols-2 gap-6">
+            <div className="space-y-3">
+              <label className="label-text">Pattern Hex</label>
               <div className="color-picker-input">
                 <input 
                   type="color" 
                   value={settings.dotsColor} 
                   onChange={(e) => setQRSettings({ dotsColor: e.target.value })}
-                  className="w-8 h-8 rounded-lg overflow-hidden border-none cursor-pointer"
+                  className="w-8 h-8 overflow-hidden border-none cursor-pointer bg-transparent"
                 />
                 <input 
                   type="text" 
                   value={settings.dotsColor} 
                   onChange={(e) => setQRSettings({ dotsColor: e.target.value })}
-                  className="bg-transparent text-xs font-mono w-full focus:outline-none"
+                  className="bg-transparent text-xs font-mono w-full focus:outline-none text-white uppercase"
                 />
               </div>
             </div>
-            <div className="space-y-2">
-              <label className="label-text">BG Color</label>
+            <div className="space-y-3">
+              <label className="label-text">Background Hex</label>
               <div className="color-picker-input">
                 <input 
                   type="color" 
                   value={settings.bgColor} 
                   onChange={(e) => setQRSettings({ bgColor: e.target.value })}
-                  className="w-8 h-8 rounded-lg overflow-hidden border-none cursor-pointer"
+                  className="w-8 h-8 overflow-hidden border-none cursor-pointer bg-transparent"
                 />
                 <input 
                   type="text" 
                   value={settings.bgColor} 
                   onChange={(e) => setQRSettings({ bgColor: e.target.value })}
-                  className="bg-transparent text-xs font-mono w-full focus:outline-none"
+                  className="bg-transparent text-xs font-mono w-full focus:outline-none text-white uppercase"
                 />
               </div>
             </div>
           </div>
 
-          <div className="space-y-3">
-            <label className="label-text">Dot Style</label>
-            <div className="grid grid-cols-3 gap-2">
+          <div className="space-y-4">
+            <label className="label-text">Module Geometry</label>
+            <div className="grid grid-cols-3 gap-3">
               {dotStyles.map((s) => (
                 <button
                   key={s}
@@ -216,9 +216,9 @@ const Controls = () => {
             </div>
           </div>
 
-          <div className="space-y-3">
-            <label className="label-text">Corner Style</label>
-            <div className="grid grid-cols-3 gap-2">
+          <div className="space-y-4">
+            <label className="label-text">Corner Geometry</label>
+            <div className="grid grid-cols-3 gap-3">
               {cornerStyles.map((s) => (
                 <button
                   key={s}
@@ -236,31 +236,31 @@ const Controls = () => {
       {/* Advanced Section */}
       <section>
         <h3 className="section-title">
-          <Settings size={14} /> Options
+          <Settings size={14} /> Optimization
         </h3>
-        <div className="space-y-6">
+        <div className="space-y-8">
           <div className="space-y-4">
             <div className="flex justify-between items-center">
-              <label className="label-text">Margin</label>
-              <span className="text-xs font-bold text-gray-900">{settings.margin}px</span>
+              <label className="label-text text-blue-400">Quiet Zone</label>
+              <span className="text-xs font-mono text-white">{settings.margin}px</span>
             </div>
             <input 
               type="range" min="0" max="100" 
               value={settings.margin}
               onChange={(e) => setQRSettings({ margin: parseInt(e.target.value) })}
-              className="w-full h-1.5 bg-gray-100 rounded-lg appearance-none cursor-pointer accent-accent"
+              className="w-full h-1 bg-white/10 appearance-none cursor-pointer accent-blue-600"
             />
           </div>
 
-          <div className="space-y-3">
-            <label className="label-text">Error Correction</label>
-            <div className="flex bg-gray-100/50 p-1 rounded-2xl border border-gray-100">
+          <div className="space-y-4">
+            <label className="label-text">ECC Level</label>
+            <div className="flex bg-white/5 p-1 border border-white/5">
               {['L', 'M', 'Q', 'H'].map((lvl) => (
                 <button
                   key={lvl}
                   onClick={() => setQRSettings({ errorCorrection: lvl })}
-                  className={`flex-1 py-2 rounded-xl text-xs font-bold transition-all ${
-                    settings.errorCorrection === lvl ? 'bg-white shadow-sm text-accent' : 'text-gray-400 hover:text-gray-600'
+                  className={`flex-1 py-3 text-xs font-bold transition-all ${
+                    settings.errorCorrection === lvl ? 'bg-blue-600 text-white' : 'text-gray-500 hover:text-gray-300'
                   }`}
                 >
                   {lvl}
@@ -275,4 +275,5 @@ const Controls = () => {
 };
 
 export default Controls;
+
 

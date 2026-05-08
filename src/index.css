@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,65 +6,66 @@
 
 @layer base {
   body {
-    @apply font-sans bg-white text-gray-900 selection:bg-accent/20 transition-colors duration-300 antialiased;
+    @apply font-sans bg-[#000510] text-white selection:bg-blue-500/30 transition-colors duration-300 antialiased;
   }
 }
 
 @layer components {
   .glass {
-    @apply bg-white/70 backdrop-blur-md border border-white/20 shadow-xl;
+    @apply bg-white/5 backdrop-blur-xl border border-white/10 shadow-2xl;
   }
   
   .glass-dark {
-    @apply bg-gray-900/70 backdrop-blur-md border border-white/5 shadow-xl;
+    @apply bg-black/40 backdrop-blur-xl border border-white/10 shadow-2xl;
   }
 
   .btn-primary {
-    @apply bg-accent hover:bg-accent-dark text-white font-medium px-6 py-2.5 rounded-2xl transition-all active:scale-95 disabled:opacity-50;
+    @apply bg-[#0062ff] hover:bg-[#0052d4] text-white font-medium px-6 py-2.5 rounded-none transition-all active:scale-95 disabled:opacity-50 border-b-2 border-blue-800;
   }
 
   .card {
-    @apply bg-white border border-gray-100 shadow-sm hover:shadow-md transition-shadow duration-300 rounded-3xl p-6;
+    @apply bg-[#0a0f1d] border border-white/10 shadow-lg transition-all duration-300 rounded-none p-6 hover:border-blue-500/50;
   }
 
   .section-title {
-    @apply text-xs font-bold text-gray-400 uppercase tracking-[0.2em] mb-5 flex items-center gap-2;
+    @apply text-xs font-bold text-blue-400 uppercase tracking-[0.2em] mb-5 flex items-center gap-2;
   }
 
   .input-field {
-    @apply w-full bg-gray-50 border border-gray-200 rounded-2xl px-5 py-4 focus:outline-none focus:ring-4 focus:ring-accent/10 focus:border-accent transition-all font-medium text-sm;
+    @apply w-full bg-white/5 border border-white/10 rounded-none px-5 py-4 focus:outline-none focus:ring-0 focus:border-blue-500 transition-all font-medium text-sm text-white placeholder:text-gray-600;
   }
 
   .label-text {
-    @apply text-xs font-bold text-gray-400 uppercase tracking-wider;
+    @apply text-xs font-bold text-gray-500 uppercase tracking-wider;
   }
 
   .color-picker-input {
-    @apply flex gap-3 p-2 bg-gray-50 rounded-2xl border border-gray-100 items-center;
+    @apply flex gap-3 p-2 bg-white/5 rounded-none border border-white/10 items-center;
   }
 
   .style-btn {
-    @apply py-3 rounded-xl text-[10px] font-bold uppercase border transition-all bg-white border-gray-100 text-gray-400 hover:border-gray-200 hover:bg-gray-50;
+    @apply py-3 rounded-none text-[10px] font-bold uppercase border transition-all bg-transparent border-white/10 text-gray-400 hover:border-white/30 hover:bg-white/5;
   }
 
   .style-btn.active {
-    @apply bg-accent/5 border-accent text-accent shadow-sm shadow-accent/5;
+    @apply bg-blue-600/10 border-blue-500 text-blue-400 shadow-sm shadow-blue-500/10;
   }
 }
 
 .bg-grid {
-  background-image: radial-gradient(circle, #e5e7eb 1px, transparent 1px);
+  background-image: radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px);
   background-size: 32px 32px;
 }
 
-.bg-mesh {
-  background-color: #ffffff;
-  background-image: 
-    radial-gradient(at 0% 0%, hsla(243,100%,95%,1) 0, transparent 50%), 
-    radial-gradient(at 50% 0%, hsla(225,100%,98%,1) 0, transparent 50%), 
-    radial-gradient(at 100% 0%, hsla(260,100%,95%,1) 0, transparent 50%);
+.bg-ibm-gradient {
+  background: radial-gradient(circle at 50% -20%, #002d9c 0%, #000510 60%);
 }
 
 .qr-container > svg {
   @apply w-full h-full;
+  filter: drop-shadow(0 0 20px rgba(0, 98, 255, 0.2));
+}
+
+.ibm-border {
+  border-left: 4px solid #0062ff;
 }
