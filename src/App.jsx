@@ -22,11 +22,14 @@ function App() {
 
       <Navbar />
 
-      <main className="relative flex flex-col lg:flex-row" style={{ minHeight: 'calc(100vh - 72px)', marginTop: '72px', zIndex: 1 }}>
+      <main
+        className="relative flex flex-col lg:flex-row overflow-hidden"
+        style={{ height: 'calc(100vh - 72px)', marginTop: '72px', zIndex: 1 }}
+      >
         {/* Left Panel: Scrollable Customization */}
-        <section className="flex-1 overflow-y-auto custom-scrollbar px-6 lg:px-10 py-8">
+        <section className="flex-1 h-full overflow-y-auto overflow-x-hidden custom-scrollbar px-6 lg:px-10 py-8">
           <div className="max-w-2xl mx-auto">
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.3 }}
@@ -37,22 +40,19 @@ function App() {
           </div>
         </section>
 
-        {/* Vertical Divider Line */}
-        <div className="hidden lg:block w-[1px] self-stretch bg-gradient-to-b from-transparent via-white/10 to-transparent" />
+        {/* Vertical Divider */}
+        <div className="hidden lg:block w-[1px] self-stretch bg-gradient-to-b from-transparent via-white/10 to-transparent flex-shrink-0" />
 
-        {/* Right Panel: Sticky Preview */}
-        <aside className="w-full lg:w-[420px] flex-shrink-0 bg-[#020a1a] border-t lg:border-t-0 lg:border-l border-white/10 overflow-y-auto">
-          <motion.div 
+        {/* Right Panel: QR Preview */}
+        <aside className="w-full lg:w-[440px] flex-shrink-0 h-full bg-[#020a1a] border-t lg:border-t-0 lg:border-l border-white/10 overflow-y-auto overflow-x-hidden">
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
-            className="lg:sticky lg:top-0 p-6 lg:p-8 space-y-6"
+            className="p-6 space-y-6"
           >
-            <div className="bg-[#050d1f] p-6 border border-white/10 relative group">
-              <div className="absolute -inset-[1px] bg-gradient-to-br from-blue-500/20 via-transparent to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
-              <QRPreview settings={settings} />
-            </div>
-            
+            <QRPreview settings={settings} />
+
             <div className="space-y-5">
               <ScanabilityIndicator />
               <History />

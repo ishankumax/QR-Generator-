@@ -5,6 +5,10 @@
 @tailwind utilities;
 
 @layer base {
+  html, body {
+    overflow: hidden;
+    height: 100%;
+  }
   body {
     @apply font-sans bg-[#000510] text-white selection:bg-blue-500/30 transition-colors duration-300 antialiased;
   }

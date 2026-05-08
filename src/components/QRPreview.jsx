@@ -9,8 +9,8 @@ const QRPreview = ({ settings }) => {
   const addToHistory = useQRStore((state) => state.addToHistory);
 
   const qrCode = useRef(new QRCodeStyling({
-    width: 240,
-    height: 240,
+    width: 320,
+    height: 320,
     data: settings.value,
     dotsOptions: {
       color: settings.dotsColor,
@@ -77,28 +77,27 @@ const QRPreview = ({ settings }) => {
   return (
     <div className="flex flex-col items-center gap-5">
       {/* Floating QR Box */}
-      <div className="relative flex items-center justify-center">
-        {/* Ambient glow behind the box */}
+      <div className="relative w-full flex items-center justify-center py-4">
+        {/* Ambient glow */}
         <div
-          className="absolute inset-0 rounded-none pointer-events-none"
+          className="absolute w-full h-full pointer-events-none"
           style={{
-            background: `radial-gradient(circle at center, ${settings.dotsColor}33 0%, transparent 70%)`,
-            filter: 'blur(20px)',
-            transform: 'scale(1.3)',
+            background: `radial-gradient(circle at center, ${settings.dotsColor}40 0%, transparent 65%)`,
+            filter: 'blur(24px)',
           }}
         />
 
         <motion.div
-          animate={{ y: [0, -8, 0] }}
+          animate={{ y: [0, -10, 0] }}
           transition={{
             duration: 3.5,
             repeat: Infinity,
             ease: 'easeInOut',
           }}
-          className="relative bg-white shadow-2xl"
+          className="relative bg-white"
           style={{
-            padding: '20px',
-            boxShadow: `0 20px 60px rgba(0,0,0,0.5), 0 0 40px ${settings.dotsColor}22`,
+            padding: '16px',
+            boxShadow: `0 24px 64px rgba(0,0,0,0.6), 0 0 48px ${settings.dotsColor}30`,
           }}
         >
           {/* Corner accents */}
@@ -107,12 +106,8 @@ const QRPreview = ({ settings }) => {
           <div className="absolute bottom-[-2px] left-[-2px] w-5 h-5 border-b-2 border-l-2 border-blue-500" />
           <div className="absolute bottom-[-2px] right-[-2px] w-5 h-5 border-b-2 border-r-2 border-blue-500" />
 
-          {/* QR Code render target */}
-          <div
-            ref={ref}
-            className="block"
-            style={{ lineHeight: 0, fontSize: 0 }}
-          />
+          {/* QR render target — display:block removes inline gap */}
+          <div ref={ref} style={{ display: 'block', lineHeight: 0, fontSize: 0 }} />
         </motion.div>
       </div>
 
