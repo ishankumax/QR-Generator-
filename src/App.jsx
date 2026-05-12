@@ -44,7 +44,7 @@ function App() {
         <div className="hidden lg:block w-[1px] self-stretch bg-gradient-to-b from-transparent via-white/10 to-transparent flex-shrink-0" />
 
         {/* Right Panel: QR Preview */}
-        <aside className="w-full lg:w-[440px] flex-shrink-0 h-full bg-[#020a1a] border-t lg:border-t-0 lg:border-l border-white/10 overflow-y-auto overflow-x-hidden">
+        <aside className="w-full lg:w-[440px] flex-shrink-0 h-full bg-black/20 backdrop-blur-sm border-t lg:border-t-0 lg:border-l border-white/10 overflow-y-auto overflow-x-hidden custom-scrollbar">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
