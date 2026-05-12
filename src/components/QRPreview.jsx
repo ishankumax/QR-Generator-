@@ -69,7 +69,7 @@ const QRPreview = ({ settings }) => {
   const onDownload = (ext) => {
     addToHistory?.();
     qrCode.current.download({
-      name: `antigravity-qr-${Date.now()}`,
+      name: `kumar-qr-${Date.now()}`,
       extension: ext,
     });
   };

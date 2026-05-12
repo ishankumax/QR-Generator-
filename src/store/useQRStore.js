@@ -6,7 +6,7 @@ export const useQRStore = create(
     (set, get) => ({
       // QR Settings
       type: 'url', // url, text, email, phone, wifi
-      value: 'https://antigravity.app',
+      value: 'https://kumar.qr',
       
       // WiFi specific
       wifiSsid: '',
@@ -62,7 +62,7 @@ export const useQRStore = create(
       loadTemplate: (template) => set((state) => ({ ...state, ...template })),
     }),
     {
-      name: 'antigravity-qr-storage',
+      name: 'kumar-qr-storage',
       partialize: (state) => ({ history: state.history }), // Only persist history
     }
   )

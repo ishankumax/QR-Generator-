@@ -17,10 +17,10 @@ const Navbar = () => {
         <div className="flex items-center gap-4">
           <div className="w-10 h-10 bg-blue-600 flex items-center justify-center relative overflow-hidden group flex-shrink-0">
             <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-blue-800" />
-            <span className="relative z-10 text-white font-black text-sm tracking-tighter leading-none">AG</span>
+            <span className="relative z-10 text-white font-black text-sm tracking-tighter leading-none">KQ</span>
           </div>
           <div className="flex flex-col">
-            <span className="text-xl font-bold tracking-tighter text-white uppercase leading-none">Antigravity</span>
+            <span className="text-xl font-bold tracking-tighter text-white uppercase leading-none">Kumar QR</span>
             <span className="text-[10px] font-bold text-blue-400 uppercase tracking-[0.2em]">x IBM AI</span>
           </div>
         </div>
