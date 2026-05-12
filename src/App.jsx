@@ -37,7 +37,7 @@ function App() {
 
       <main
         className="relative flex flex-col lg:flex-row overflow-hidden"
-        style={{ height: 'calc(100vh - 72px)', marginTop: '72px', zIndex: 1 }}
+        style={{ height: 'calc(100vh - 96px)', marginTop: '96px', zIndex: 1 }}
       >
         {/* Left Panel: Scrollable Customization */}
         <section className="flex-1 h-full overflow-y-auto overflow-x-hidden custom-scrollbar px-6 lg:px-10 py-8">
