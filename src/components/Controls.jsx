@@ -8,11 +8,26 @@ import {
 } from 'lucide-react';
 import { generateWiFiString } from '../utils/qrUtils';
 
+import { useShallow } from 'zustand/shallow';
+
 const Controls = () => {
-  const { 
-    type, value, wifiSsid, wifiPassword, wifiEncryption, 
-    setQRSettings, loadTemplate, ...settings 
-  } = useQRStore();
+  const type = useQRStore((state) => state.type);
+  const value = useQRStore((state) => state.value);
+  const wifiSsid = useQRStore((state) => state.wifiSsid);
+  const wifiPassword = useQRStore((state) => state.wifiPassword);
+  const wifiEncryption = useQRStore((state) => state.wifiEncryption);
+  const setQRSettings = useQRStore((state) => state.setQRSettings);
+  const loadTemplate = useQRStore((state) => state.loadTemplate);
+  
+  // Design settings
+  const settings = useQRStore(useShallow((state) => ({
+    dotsColor: state.dotsColor,
+    bgColor: state.bgColor,
+    dotsStyle: state.dotsStyle,
+    cornerSquareStyle: state.cornerSquareStyle,
+    margin: state.margin,
+    errorCorrection: state.errorCorrection,
+  })));
 
   const handleValueChange = (e) => {
     setQRSettings({ value: e.target.value });

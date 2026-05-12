@@ -81,6 +81,12 @@
 
 .bg-ibm-gradient {
   background: radial-gradient(circle at 50% -20%, #002d9c 0%, #000510 60%);
+  animation: ambient-pulse 15s ease-in-out infinite;
+}
+
+@keyframes ambient-pulse {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.05); }
 }
 
 .qr-container > svg {

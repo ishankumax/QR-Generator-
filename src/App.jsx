@@ -8,8 +8,21 @@ import ScanabilityIndicator from './components/ScanabilityIndicator';
 import { useQRStore } from './store/useQRStore';
 import { Sparkles, ArrowRight, Zap, Shield, Share2, Cpu, BarChart3, Database } from 'lucide-react';
 
+import { useShallow } from 'zustand/shallow';
+
 function App() {
-  const settings = useQRStore();
+  // Select only settings, excluding history and actions to optimize performance
+  const settings = useQRStore(useShallow((state) => ({
+    type: state.type,
+    value: state.value,
+    dotsStyle: state.dotsStyle,
+    dotsColor: state.dotsColor,
+    bgColor: state.bgColor,
+    cornerSquareStyle: state.cornerSquareStyle,
+    cornerDotStyle: state.cornerDotStyle,
+    margin: state.margin,
+    errorCorrection: state.errorCorrection,
+  })));
 
   return (
     <div className="min-h-screen bg-[#000510] relative overflow-hidden selection:bg-blue-500/30 font-sans">

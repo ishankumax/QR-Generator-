@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import QRCodeStyling from 'qr-code-styling';
 import { useQRStore } from '../store/useQRStore';
-import { Download, FileCode } from 'lucide-react';
+import { Download, FileCode, Copy, ShieldCheck } from 'lucide-react';
 
 const QRPreview = ({ settings }) => {
   const ref = useRef(null);
@@ -66,12 +66,27 @@ const QRPreview = ({ settings }) => {
     });
   }, [settings]);
 
+  const [copied, setCopied] = React.useState(false);
+
   const onDownload = (ext) => {
     addToHistory?.();
     qrCode.current.download({
       name: `kumar-qr-${Date.now()}`,
       extension: ext,
     });
+  };
+
+  const onCopy = async () => {
+    try {
+      const blob = await qrCode.current.getRawData('png');
+      const item = new ClipboardItem({ 'image/png': blob });
+      await navigator.clipboard.write([item]);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+      addToHistory?.();
+    } catch (err) {
+      console.error('Failed to copy: ', err);
+    }
   };
 
   return (
@@ -108,25 +123,55 @@ const QRPreview = ({ settings }) => {
 
           {/* QR render target — display:block removes inline gap */}
           <div ref={ref} style={{ display: 'block', lineHeight: 0, fontSize: 0 }} />
+
+          {/* Scanning Laser Effect */}
+          <div className="absolute inset-0 pointer-events-none overflow-hidden">
+            <motion.div 
+              animate={{ top: ['0%', '100%', '0%'] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+              className="absolute left-0 right-0 h-[2px] bg-blue-500/50 shadow-[0_0_15px_rgba(59,130,246,0.8)] z-20"
+            />
+          </div>
         </motion.div>
       </div>
 
       {/* Download Buttons */}
       <div className="flex flex-col w-full gap-2">
         <button
-          onClick={() => onDownload('png')}
-          className="w-full bg-[#0062ff] hover:bg-[#0052d4] text-white py-3 font-bold uppercase tracking-widest flex items-center justify-center gap-2 transition-all active:scale-[0.98] text-[11px]"
+          onClick={onCopy}
+          className={`w-full py-3 font-bold uppercase tracking-widest flex items-center justify-center gap-2 transition-all active:scale-[0.98] text-[11px] ${
+            copied ? 'bg-green-600 text-white' : 'bg-blue-600 text-white hover:bg-blue-700'
+          }`}
         >
-          <Download size={14} />
-          Download PNG
+          {copied ? (
+            <>
+              <ShieldCheck size={14} />
+              Copied to Clipboard
+            </>
+          ) : (
+            <>
+              <Copy size={14} />
+              Copy to Clipboard
+            </>
+          )}
         </button>
-        <button
-          onClick={() => onDownload('svg')}
-          className="w-full bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 text-gray-300 py-3 font-bold uppercase tracking-widest flex items-center justify-center gap-2 transition-all active:scale-[0.98] text-[11px]"
-        >
-          <FileCode size={14} />
-          Export SVG
-        </button>
+        
+        <div className="flex gap-2">
+          <button
+            onClick={() => onDownload('png')}
+            className="flex-1 bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 text-gray-300 py-3 font-bold uppercase tracking-widest flex items-center justify-center gap-2 transition-all active:scale-[0.98] text-[11px]"
+          >
+            <Download size={14} />
+            PNG
+          </button>
+          <button
+            onClick={() => onDownload('svg')}
+            className="flex-1 bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 text-gray-300 py-3 font-bold uppercase tracking-widest flex items-center justify-center gap-2 transition-all active:scale-[0.98] text-[11px]"
+          >
+            <FileCode size={14} />
+            SVG
+          </button>
+        </div>
       </div>
     </div>
   );
